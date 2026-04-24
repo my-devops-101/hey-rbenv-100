@@ -95,9 +95,9 @@ export RUBY_CFLAGS="-O2"
 ```
 
 参数|说明
----｜---
-`--disable-install-doc` |         不安装文档（ri）
-`--disable-install-rdoc` |         不生成 rdoc 文档
+--- | ---
+`--disable-install-doc` | 不安装文档（ri）
+`--disable-install-rdoc` |        不生成 rdoc 文档
 `    -j1` | 单线程编译
 `-j$(nproc)` | CPU 核心数并行编译
 `-O2` | 优化等级
