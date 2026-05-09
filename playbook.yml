@@ -1,9 +1,8 @@
 ---
 - hosts: all
-  become: yes
   vars:
     # ansible_python_interpreter: /usr/bin/python3.10
-    rbenv_user: ubuntu
+    rbenv_user: hudashuai
     rbenv_root: ~/.rbenv
     ruby_version: 3.4.8
   # environment:
@@ -15,13 +14,6 @@
     - apt: update_cache=true cache_valid_time=3600
 
   tasks:
-  - name: install dependencies
-    apt:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - acl
-
   - name: download rbenv-doctor
     get_url:
       url: https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-doctor
@@ -31,17 +23,16 @@
   # https://github.com/rbenv/ruby-build/wiki#ubuntudebianmint
   - name: install ruby-build dependencies(latest stable version)
     apt:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - build-essential
-      - autoconf
-      - libssl-dev
-      - libyaml-dev
-      - zlib1g-dev
-      - libffi-dev
-      - libgmp-dev
-      - rustc
+      name:
+        - build-essential
+        - autoconf
+        - libssl-dev
+        - libyaml-dev
+        - zlib1g-dev
+        - libffi-dev
+        - libgmp-dev
+        - rustc
+      state: present      
 
   # - name: install ruby-build dependencies(old stable versions)
   #   apt:
