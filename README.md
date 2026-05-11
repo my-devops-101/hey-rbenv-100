@@ -32,9 +32,9 @@ git clone https://github.com/rbenv/rbenv-vars.git "$(rbenv root)"/plugins/rbenv-
 
 ```bash
 # rbenv init
-# 略显冗余，可以采用下面方法手动处理
-status --is-interactive; and rbenv init - --no-rehash fish | source
 
+# 略显冗余，可以采用下面方法手动处理
+# status --is-interactive; and rbenv init - --no-rehash fish | source
 rbenv init - --no-rehash fish | source
 ```
 
@@ -44,13 +44,9 @@ rbenv init - --no-rehash fish | source
 
 > [Suggested build environment](https://github.com/rbenv/ruby-build/wiki#suggested-build-environment)
 
-```bash
-export RUBY_CONFIGURE_OPTS="--disable-install-doc --disable-install-rdoc"
-```
-
 
 ```bash
-set -Ux RUBY_CONFIGURE_OPTS --disable-install-doc --disable-install-rdoc 
+set -Ux RUBY_CONFIGURE_OPTS --disable-install-doc
 ```
 
 
@@ -60,19 +56,7 @@ set -Ux RUBY_CONFIGURE_OPTS --disable-install-doc --disable-install-rdoc
 ```bash
 # 跳过 YJIT 编译（不推荐，除非你不需要 JIT）
 export RUBY_CONFIGURE_OPTS="--disable-yjit"
-
-# 降低并发度，减少内存使用
-export MAKEOPTS="-j1"
 ```
-
----
-
-```
---enable-shared
-- libjemalloc1
-- libjemalloc-dev
-```
-
 
 
 ## Ubuntu
@@ -89,7 +73,7 @@ rbenv global 3.4.8
 
 
 ```bash
-export RUBY_CONFIGURE_OPTS="--disable-install-doc --disable-install-rdoc"
+export RUBY_CONFIGURE_OPTS="--disable-install-doc"
 export MAKEOPTS="-j1"
 export RUBY_CFLAGS="-O2"
 ```
@@ -97,8 +81,7 @@ export RUBY_CFLAGS="-O2"
 参数|说明
 --- | ---
 `--disable-install-doc` | 不安装文档（ri）
-`--disable-install-rdoc` |        不生成 rdoc 文档
-`    -j1` | 单线程编译
+`-j1` | 单线程编译
 `-j$(nproc)` | CPU 核心数并行编译
 `-O2` | 优化等级
 

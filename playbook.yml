@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     # ansible_python_interpreter: /usr/bin/python3.10
-    rbenv_user: hudashuai
+    rbenv_user: hu
     rbenv_root: ~/.rbenv
     ruby_version: 3.4.8
   # environment:
@@ -31,7 +31,8 @@
         - zlib1g-dev
         - libffi-dev
         - libgmp-dev
-        - rustc
+        - rustc               # --enable-yjit
+        - libjemalloc-dev     # --with-jemalloc
       state: present      
 
   # - name: install ruby-build dependencies(old stable versions)
@@ -62,11 +63,19 @@
         - { name: 'rbenv-vars', url: 'https://github.com/rbenv/rbenv-vars.git' }
 
     # https://github.com/rbenv/rbenv?tab=readme-ov-file#how-rbenv-hooks-into-your-shell
-    # - name: load rbenv
-    #   lineinfile:
-    #     path: ~/.bashrc
-    #     line: eval "$(~/.rbenv/bin/rbenv init - --no-rehash bash)"
+    - name: Configure rbenv environment
+      ansible.builtin.blockinfile:
+        path: "~/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED RBENV"
+        block: |
+          export RUBY_CONFIGURE_OPTS="--disable-install-doc --with-jemalloc"
+          export MAKEOPTS="-j$(nproc)"
+          export RUBY_CFLAGS="-O2"
 
+          eval "$(~/.rbenv/bin/rbenv init - --no-rehash bash)"
+        create: yes
+
+    
     # 老方案
     # $0：指代当前正在运行的 shell 程序本身
     # -l：表示使用 login shell 模式
