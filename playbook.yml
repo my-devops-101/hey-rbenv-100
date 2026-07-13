@@ -1,8 +1,9 @@
 ---
 - hosts: all
+  become: yes
   vars:
     # ansible_python_interpreter: /usr/bin/python3.10
-    rbenv_user: hu
+    rbenv_user: ubuntu
     rbenv_root: ~/.rbenv
     ruby_version: 3.4.8
   # environment:
